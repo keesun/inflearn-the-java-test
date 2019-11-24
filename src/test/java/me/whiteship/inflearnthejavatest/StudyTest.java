@@ -15,16 +15,16 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 class StudyTest {
 
     @Test
-    @DisplayName("스터디 만들기 ╯°□°）╯")
-    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "LOCAL")
+    @DisplayName("스터디 만들기 fast")
+    @Tag("fast")
     void create_new_study() {
         Study actual = new Study(100);
         assertThat(actual.getLimit()).isGreaterThan(0);
     }
 
     @Test
-    @DisplayName("스터디 만들기 \uD83D\uDE31")
-    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "keesun")
+    @DisplayName("스터디 만들기 slow")
+    @Tag("slow")
     void create_new_study_again() {
         System.out.println("create1");
     }
