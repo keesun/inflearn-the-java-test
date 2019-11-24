@@ -14,17 +14,15 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
 
-    @Test
+    @FastTest
     @DisplayName("스터디 만들기 fast")
-    @Tag("fast")
     void create_new_study() {
         Study actual = new Study(100);
         assertThat(actual.getLimit()).isGreaterThan(0);
     }
 
-    @Test
+    @SlowTest
     @DisplayName("스터디 만들기 slow")
-    @Tag("slow")
     void create_new_study_again() {
         System.out.println("create1");
     }
