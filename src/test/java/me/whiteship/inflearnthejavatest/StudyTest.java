@@ -14,6 +14,7 @@ import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -25,14 +26,15 @@ class StudyTest {
     static FindSlowTestExtension findSlowTestExtension =
             new FindSlowTestExtension(1000L);
 
-    @Order(2)
-    @FastTest
-    @DisplayName("스터디 만들기 fast")
+    @Test
+    @DisplayName("스터디 만들기")
     void create_new_study() {
-        System.out.println(this);
-        System.out.println(value++);
-        Study actual = new Study(1);
-        assertThat(actual.getLimit()).isGreaterThan(0);
+        Study actual = new Study(1, "테스트 스터디");
+        assertAll(
+            () -> assertEquals(1, actual.getLimit()),
+            () -> assertEquals("테스트 스터디", actual.getName()),
+            () -> assertEquals(StudyStatus.DRAFT, actual.getStatus())
+        );
     }
 
     @Order(1)

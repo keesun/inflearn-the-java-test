@@ -1,12 +1,16 @@
 package me.whiteship.inflearnthejavatest;
 
+import java.time.LocalDateTime;
+
 public class Study {
 
-    private StudyStatus status;
+    private StudyStatus status = StudyStatus.DRAFT;
 
     private int limit;
 
     private String name;
+
+    private LocalDateTime openedDateTime;
 
     public Study(int limit, String name) {
         this.limit = limit;
@@ -39,5 +43,14 @@ public class Study {
                 ", limit=" + limit +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public void publish() {
+        this.openedDateTime = LocalDateTime.now();
+        this.status = StudyStatus.OPENED;
+    }
+
+    public LocalDateTime getOpenedDateTime() {
+        return openedDateTime;
     }
 }
