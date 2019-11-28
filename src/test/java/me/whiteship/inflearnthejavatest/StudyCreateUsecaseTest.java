@@ -1,5 +1,7 @@
 package me.whiteship.inflearnthejavatest;
 
+import me.whiteship.inflearnthejavatest.domain.Study;
+import me.whiteship.inflearnthejavatest.study.StudyStatus;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

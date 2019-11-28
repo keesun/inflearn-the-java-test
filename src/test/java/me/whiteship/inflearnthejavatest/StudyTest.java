@@ -1,7 +1,8 @@
 package me.whiteship.inflearnthejavatest;
 
+import me.whiteship.inflearnthejavatest.domain.Study;
+import me.whiteship.inflearnthejavatest.study.StudyStatus;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,7 +32,7 @@ class StudyTest {
     void create_new_study() {
         Study actual = new Study(1, "테스트 스터디");
         assertAll(
-            () -> assertEquals(1, actual.getLimit()),
+            () -> assertEquals(1, actual.getLimitCount()),
             () -> assertEquals("테스트 스터디", actual.getName()),
             () -> assertEquals(StudyStatus.DRAFT, actual.getStatus())
         );
