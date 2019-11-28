@@ -2,8 +2,9 @@ package me.whiteship.inflearnthejavatest.member;
 
 import me.whiteship.inflearnthejavatest.domain.Member;
 
-public interface MemberService {
-    void validate(Long memberId) throws InvalidMemberException;
+import java.util.Optional;
 
-    Member findById(Long memberId) throws MemberNotFoundException;
+public interface MemberService {
+
+    Optional<Member> findById(Long memberId);
 }

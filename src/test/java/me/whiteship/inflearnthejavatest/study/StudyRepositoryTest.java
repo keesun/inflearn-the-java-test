@@ -16,6 +16,7 @@ class StudyRepositoryTest {
 
     @Test
     void save() {
+        repository.deleteAll();
         Study study = new Study(10, "Java");
         repository.save(study);
         List<Study> all = repository.findAll();
