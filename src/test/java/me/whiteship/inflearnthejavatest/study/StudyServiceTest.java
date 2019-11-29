@@ -5,6 +5,7 @@ import me.whiteship.inflearnthejavatest.domain.Study;
 import me.whiteship.inflearnthejavatest.member.MemberService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -41,7 +42,11 @@ class StudyServiceTest {
         when(studyRepository.save(study)).thenReturn(study);
 
         studyService.createNewStudy(1L, study);
+
         assertEquals(member, study.getOwner());
+
+        verify(memberService, times(1)).notify(study);
+        verifyNoMoreInteractions(memberService);
     }
 
 }
