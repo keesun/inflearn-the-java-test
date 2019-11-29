@@ -11,8 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -53,15 +52,16 @@ class StudyServiceTest {
         // Given
         StudyService studyService = new StudyService(memberService, studyRepository);
         Study study = new Study(10, "더 자바, 테스트");
-        // TODO studyRepository Mock 객체의 save 메소드를호출 시 study를 리턴하도록 만들기.
+        assertNull(study.getOpenedDateTime());
+        given(studyRepository.save(study)).willReturn(study);
 
         // When
         studyService.openStudy(study);
 
         // Then
-        // TODO study의 status가 OPENED로 변경됐는지 확인
-        // TODO study의 openedDataTime이 null이 아닌지 확인
-        // TODO memberService의 notify(study)가 호출 됐는지 확인.
+        assertEquals(StudyStatus.OPENED, study.getStatus());
+        assertNotNull(study.getOpenedDateTime());
+        then(memberService).should().notify(study);
     }
 
 }
