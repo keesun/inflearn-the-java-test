@@ -21,6 +21,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
@@ -28,6 +29,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.io.File;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,25 +52,15 @@ class StudyServiceTest {
     @Value("${container.port}") int port;
 
     @Container
-    static GenericContainer postgreSQLContainer = new GenericContainer("postgres")
-            .withExposedPorts(5432)
-            .withEnv("POSTGRES_DB", "studytest");
-
-    @BeforeAll
-    static void beforeAll() {
-        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(log);
-        postgreSQLContainer.followOutput(logConsumer);
-    }
-
-    @BeforeEach
-    void beforeEach() {
-        System.out.println("===========");
-        System.out.println(port);
-        studyRepository.deleteAll();
-    }
+    static DockerComposeContainer composeContainer =
+            new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"))
+            .withExposedService("study-db", 5432);
 
     @Test
     void createNewStudy() {
+        System.out.println("========");
+        System.out.println(port);
+
         // Given
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
@@ -111,7 +103,7 @@ class StudyServiceTest {
 
         @Override
         public void initialize(ConfigurableApplicationContext context) {
-            TestPropertyValues.of("container.port=" + postgreSQLContainer.getMappedPort(5432))
+            TestPropertyValues.of("container.port=" + composeContainer.getServicePort("study-db", 5432))
                     .applyTo(context.getEnvironment());
         }
     }
