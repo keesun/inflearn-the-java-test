@@ -18,8 +18,7 @@ public class Study {
     private int limitCount;
     private String name;
     private LocalDateTime openedDateTime;
-    @ManyToOne
-    private Member owner;
+    private Long ownerId;
 
     public Study(int limit, String name) {
         this.limitCount = limit;
