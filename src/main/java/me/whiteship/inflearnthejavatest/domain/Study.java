@@ -3,9 +3,10 @@ package me.whiteship.inflearnthejavatest.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.whiteship.inflearnthejavatest.study.StudyStatus;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,6 +36,7 @@ public class Study {
     public void open() {
         this.openedDateTime = LocalDateTime.now();
         this.status = StudyStatus.OPENED;
+
     }
 
 }
