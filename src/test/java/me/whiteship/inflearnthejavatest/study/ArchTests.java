@@ -13,6 +13,13 @@ import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.sli
 public class ArchTests {
 
     @ArchTest
+    ArchRule controllerClassRule = classes().that().haveSimpleNameEndingWith("Controller")
+            .should().accessClassesThat().haveSimpleNameEndingWith("Service")
+            .orShould().accessClassesThat().haveSimpleNameEndingWith("Repository");
+
+
+
+    @ArchTest
     ArchRule domainPackageRule = classes().that().resideInAPackage("..domain..")
             .should().onlyBeAccessed().byClassesThat()
             .resideInAnyPackage("..study..", "..member..", "..domain..");
